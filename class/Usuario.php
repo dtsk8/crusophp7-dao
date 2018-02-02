@@ -35,7 +35,7 @@ class Usuario{
 	public function setDtcadastro($value){
 		$this->dtcadastro = $value;
 	}
-	public function loadById($id){
+	public function loadById($id){//usuario por ID
 		$sql = new Sql();
 
 		$results = $sql->select("SELECT * FROM tb_usuarios WHERE idusuario = :ID", array(
@@ -48,6 +48,37 @@ class Usuario{
 			$this->setDeslogin($row['deslogin']);
 			$this->setDessenha($row['dessenha']);
 			$this->setDtcadastro(new DateTime($row['dtcadastro']));
+		}
+	}
+
+	public static function getList(){//metodo lista
+		$sql = new Sql();
+		return $sql->select("SELECT * FROM tb_usuarios ORDER BY deslogin;");
+	}
+	public static function search($login){//metodo busca
+		$sql = new Sql();
+		return $sql->select("SELECT * FROM tb_usuarios WHERE deslogin LIKE :SEARCH ORDER BY deslogin",array(
+			':SEARCH'=>"%".$login."%"
+
+		));
+	}
+
+	public function login($login, $password){
+		$sql = new Sql();
+
+		$results = $sql->select("SELECT * FROM tb_usuarios WHERE deslogin = :LOGIN AND dessenha = :PASSWORD", array(
+			":LOGIN"=>$login,
+			":PASSWORD"=>$password
+		));
+		if (count($results) > 0) {
+			$row = $results[0];
+
+			$this->setIdusuario($row['idusuario']);
+			$this->setDeslogin($row['deslogin']);
+			$this->setDessenha($row['dessenha']);
+			$this->setDtcadastro(new DateTime($row['dtcadastro']));
+		} else {
+			throw new Exception("Login e/ou Senha inválidos");
 		}
 	}
 
