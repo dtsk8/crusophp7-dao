@@ -28,9 +28,36 @@ echo "<br/>";
 $search = Usuario::search("u");
 echo json_encode($search);
 
-*/
+
 //login
 $usuario = new Usuario();
 $usuario->login("user","123456");
+echo $usuario;
+*/
+/*INSERT
+$aluno = new Usuario("aluno", "@alinu");
+//$aluno->setDeslogin("aluno");
+//$aluno->setDessenha("@alun0");
+
+$aluno->insert();
+echo $aluno;
+*/
+//Alterar usuarioa UPDATE
+/*
+$usuario = new Usuario();
+
+$usuario->loadById(8);
+
+$usuario->update("professor","iadhaosdhal");
+
+echo $usuario;
+*/
+
+$usuario = new Usuario();
+
+$usuario->loadById(9);
+
+$usuario->delete();
+
 echo $usuario;
 ?>
